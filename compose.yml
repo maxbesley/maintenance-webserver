@@ -1,6 +1,23 @@
 services:
-  web:
-    container_name: server
-    build: .
+  caddy:
+    container_name: caddy
+    image: caddy:2.10-alpine
+    cap_add:
+      - NET_ADMIN
     ports:
       - 80:80
+      - 443:443
+      - 443:443/udp
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+      - $PWD/Caddyfile:/etc/caddy/Caddyfile
+  app:
+    container_name: app
+    build: .
+    ports:
+      - 9000:9000
+
+volumes:
+  caddy_data:
+  caddy_config:

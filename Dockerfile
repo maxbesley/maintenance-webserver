@@ -1,12 +1,18 @@
-FROM golang:1.24-alpine
+# TODO: convert this into a mult-stage build
+
+FROM golang:1.18-alpine
+
+ARG CGO_ENABLED=0
+ARG GOOS=linux
 
 WORKDIR /app
 
 COPY . .
 
 RUN go mod init app
-RUN CGO_ENABLED=0 GOOS=linux go build -o server
+RUN go build -o server
+RUN chmod +x server
 
-EXPOSE 80
+EXPOSE 9000
 
-CMD ["/app/server"]
+ENTRYPOINT ["/app/server"]

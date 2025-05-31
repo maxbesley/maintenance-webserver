@@ -2,16 +2,16 @@ package main
 
 import (
     "fmt"
-	"log"
-	"net/http"
+    "log"
+    "net/http"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "index.html")
+    http.ServeFile(w, r, "index.html")
 }
 
 func main() {
-	http.HandleFunc("/", handler)
+    http.HandleFunc("/", handler)
     fmt.Println("Serving stuff...")
-	log.Fatal(http.ListenAndServe(":80", nil))
+    log.Fatal(http.ListenAndServe(":9000", nil))
 }
